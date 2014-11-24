@@ -46,11 +46,11 @@ class Http {
 			CURLOPT_RETURNTRANSFER	=> false,
 			CURLOPT_HEADER			=> false,
 			//habilitamos ssl para la seguridad del cliente
-			CURLOPT_SSL_VERIFYPEER	=> true,
-			CURLOPT_SSL_VERIFYHOST	=> 2,
+			CURLOPT_SSL_VERIFYPEER	=> false,
+			CURLOPT_SSL_VERIFYHOST	=> false,
 			
 			CURLOPT_FOLLOWLOCATION	=> true,
-			CURLOPT_MAXREDIRS		=> 5,
+			CURLOPT_MAXREDIRS		=> 10,
 			CURLOPT_AUTOREFERER		=> false
 		);
 		
@@ -160,11 +160,16 @@ class Http {
 	
 		if($this->text){ //si es dato se guarda para enviar
 			$this->data .= $str;
-		} else {// si es otra cosa debemos enviar ahi mismo
+		} else {
+		
+		    // si es otra cosa debemos enviar ahi mismo
 		    //guardamos una copia en cache
-            $name = str_replace("/", "_", $this->url);
+            $name = str_replace("/", "*", $this->url);
             $file = fopen('cache/'.$name, 'a+');
-            if(!$file) ;
+            //echo $str;
+            if(!$file) {
+                //echo "Error\n";
+            }
             else{
                 fwrite($file, $str);
 	            fclose($file);

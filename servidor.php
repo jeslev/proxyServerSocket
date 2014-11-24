@@ -36,9 +36,9 @@ function getHtml($url, $socket){
     //agregamos los headers anteriores
     $http->set_headers($headers);    
     
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    /*if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	    $http->set_post($_POST);
-    }
+    }*/
     //ejecuta curl
     $http->download($url);
     
@@ -115,7 +115,7 @@ function getHtml($url, $socket){
 	    
 	    
         //guardamos una copia en cache
-        $name = str_replace("/", "_", $url);
+        $name = str_replace("/", "*", $url);
         $file = fopen('cache/'.$name, 'a+');
         if(!$file) ;
         else{
@@ -125,7 +125,7 @@ function getHtml($url, $socket){
     } else if($http->error()){
         //si hay algun error verificamos si existe copia de la pagina en cache
         //cargamos copia en cache
-        $name = str_replace("/", "_", $url);
+        $name = str_replace("/", "*", $url);
         $filename = "cache/".$name;
         
         $handle = fopen($filename, "rb");
